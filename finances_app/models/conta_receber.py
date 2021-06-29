@@ -11,3 +11,6 @@ class ContaReceber(models.Model):
     forma_pagamento = models.OneToOneField(FormaPagamento, on_delete=models.CASCADE)
     classificacao = models.OneToOneField(Classificacao, on_delete=models.CASCADE)
     situacao = models.CharField(max_length=20, choices=SituacaoReceber.choices())
+
+    class Meta:
+        verbose_name_plural = "Contas a Receber"

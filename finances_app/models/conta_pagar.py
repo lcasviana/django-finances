@@ -11,3 +11,9 @@ class ContaPagar(models.Model):
     forma_pagamento = models.OneToOneField(FormaPagamento, on_delete=models.CASCADE)
     classificacao = models.OneToOneField(Classificacao, on_delete=models.CASCADE)
     situacao = models.CharField(max_length=20, choices=SituacaoPagar.choices())
+
+    def __str__(self):
+        return '{self.descricao} ${self.valor} ({self.situacao})'.format(self=self)
+
+    class Meta:
+        verbose_name_plural = "Contas a Pagar"
