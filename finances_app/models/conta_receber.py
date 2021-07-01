@@ -12,8 +12,8 @@ class ContaReceber(models.Model):
     descricao = models.CharField(max_length=60)
     data_expectativa = models.DateField()
     data_recebimento = models.DateField(default=None, blank=True, null=True)
-    forma_pagamento = models.OneToOneField(FormaPagamento, on_delete=models.CASCADE)
-    classificacao = models.OneToOneField(Classificacao, on_delete=models.CASCADE)
+    forma_pagamento = models.ForeignKey(FormaPagamento, on_delete=models.CASCADE)
+    classificacao = models.ForeignKey(Classificacao, on_delete=models.CASCADE)
     situacao = models.IntegerField(choices=SITUACAO)
 
     def __str__(self):
