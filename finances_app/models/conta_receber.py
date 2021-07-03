@@ -23,5 +23,21 @@ class ContaReceber(models.Model):
         }[self.situacao]
         return '{self.descricao} - ${self.valor} ({self.option})'.format(self=self)
 
+    def json(self):
+        self.option = {
+            0: 'A Receber',
+            1: 'Recebido',
+        }[self.situacao]
+        return {
+            'id': self.id,
+            'valor': self.valor,
+            'descricao': self.descricao,
+            'data_expectativa': self.data_expectativa,
+            'data_recebimento': self.data_recebimento,
+            'forma_pagamento': self.forma_pagamento.descricao,
+            'classificacao': self.classificacao.descricao,
+            'situacao': self.option,
+        }
+
     class Meta:
         verbose_name_plural = "Contas a Receber"

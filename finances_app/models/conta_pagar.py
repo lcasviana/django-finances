@@ -23,5 +23,21 @@ class ContaPagar(models.Model):
         }[self.situacao]
         return '{self.descricao} - ${self.valor} ({self.option})'.format(self=self)
 
+    def json(self):
+        self.option = {
+            0: 'A Pagar',
+            1: 'Pago',
+        }[self.situacao]
+        return {
+            'id': self.id,
+            'valor': self.valor,
+            'descricao': self.descricao,
+            'data_vencimento': self.data_vencimento,
+            'data_pagamento': self.data_pagamento,
+            'forma_pagamento': self.forma_pagamento.descricao,
+            'classificacao': self.classificacao.descricao,
+            'situacao': self.option,
+        }
+
     class Meta:
         verbose_name_plural = "Contas a Pagar"

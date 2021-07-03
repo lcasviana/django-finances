@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import *
+from ..models import *
 
 def index(request):
     contas_pagar = ContaPagar.objects.all()
