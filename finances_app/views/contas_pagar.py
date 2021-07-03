@@ -1,6 +1,9 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
+import json
 from ..models import *
 
+@csrf_exempt
 def contas_pagar_index(request):
     try:
         if request.method == 'GET':
@@ -12,6 +15,7 @@ def contas_pagar_index(request):
     except Exception as e:
         return HttpResponse(status=500)
 
+@csrf_exempt
 def contas_pagar_index_id(request, id):
     try:
         if request.method == 'GET':
@@ -32,9 +36,37 @@ def contas_pagar_obtain_all(request):
 
 def contas_pagar_insert(request):
     try:
-        classificacao_obj = Classificacao.objects.find(descricao=classificacao).first()
+        if not request.body:
+            return JsonResponse({ 'mensagem': 'Requisicao nula' }, status=400)
+        body = json.loads(request.body)
+        if not 'classificacao' in body \
+            or not 'valor' in body \
+            or not 'descricao' in body \
+            or not 'data_vencimento' in body \
+            or not 'data_pagamento' in body \
+            or not 'forma_pagamento' in body \
+            or not 'classificacao' in body \
+            or not 'situacao' in body:
+            return JsonResponse({ 'mensagem': 'Campos nao preenchidos' }, status=400)
+
+        forma_pagamento_obj = FormaPagamento.objects.get(descricao=body['forma_pagamento'])
+        classificacao_obj = Classificacao.objects.get(descricao=body['classificacao'])
+
+        conta_pagar = ContaPagar()
+        conta_pagar.valor = body['valor']
+        conta_pagar.descricao = body['descricao']
+        conta_pagar.data_vencimento = body['data_vencimento']
+        conta_pagar.data_pagamento = body['data_pagamento']
+        conta_pagar.forma_pagamento = forma_pagamento_obj
+        conta_pagar.classificacao = classificacao_obj
+        conta_pagar.situacao = body['situacao']
+        conta_pagar.save()
+
+        return HttpResponse(status=201)
+    except FormaPagamento.DoesNotExist:
+        return JsonResponse({ 'mensagem': 'Forma de pagamento nao encontrada' }, status=400)
     except Classificacao.DoesNotExist:
-        return JsonResponse(resposta, status=200)
+        return JsonResponse({ 'mensagem': 'Classificao nao encontrada' }, status=400)
 
 def contas_pagar_obtain_id(request, id):
     try:
@@ -46,9 +78,37 @@ def contas_pagar_obtain_id(request, id):
 
 def contas_pagar_update(request, id):
     try:
+        if not request.body:
+            return JsonResponse({ 'mensagem': 'Requisicao nula' }, status=400)
+        body = json.loads(request.body)
+        if not 'classificacao' in body \
+            or not 'valor' in body \
+            or not 'descricao' in body \
+            or not 'data_vencimento' in body \
+            or not 'data_pagamento' in body \
+            or not 'forma_pagamento' in body \
+            or not 'classificacao' in body \
+            or not 'situacao' in body:
+            return JsonResponse({ 'mensagem': 'Campos nao preenchidos' }, status=400)
+
         conta_pagar = ContaPagar.objects.get(id=id)
-        pass
+        forma_pagamento_obj = FormaPagamento.objects.get(descricao=body['forma_pagamento'])
+        classificacao_obj = Classificacao.objects.get(descricao=body['classificacao'])
+
+        conta_pagar.valor = body['valor']
+        conta_pagar.descricao = body['descricao']
+        conta_pagar.data_vencimento = body['data_vencimento']
+        conta_pagar.data_pagamento = body['data_pagamento']
+        conta_pagar.forma_pagamento = forma_pagamento_obj
+        conta_pagar.classificacao = classificacao_obj
+        conta_pagar.situacao = body['situacao']
+        conta_pagar.save()
+
         return HttpResponse(status=202)
+    except FormaPagamento.DoesNotExist:
+        return JsonResponse({ 'mensagem': 'Forma de pagamento nao encontrada' }, status=400)
+    except Classificacao.DoesNotExist:
+        return JsonResponse({ 'mensagem': 'Classificao nao encontrada' }, status=400)
     except ContaPagar.DoesNotExist:
         return HttpResponse(status=404)
 
