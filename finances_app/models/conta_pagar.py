@@ -40,4 +40,5 @@ class ContaPagar(models.Model):
         }
 
     class Meta:
-        verbose_name_plural = "Contas a Pagar"
+        verbose_name_plural = 'Contas a Pagar'
+        ordering = ['data_vencimento']

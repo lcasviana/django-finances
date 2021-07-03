@@ -7,4 +7,4 @@ class Classificacao(models.Model):
         return '{self.descricao}'.format(self=self)
 
     class Meta:
-        verbose_name_plural = "Classificacoes"
+        verbose_name_plural = 'Classificacoes'

@@ -40,4 +40,5 @@ class ContaReceber(models.Model):
         }
 
     class Meta:
-        verbose_name_plural = "Contas a Receber"
+        verbose_name_plural = 'Contas a Receber'
+        ordering = ['data_expectativa']
