@@ -21,7 +21,7 @@ class ContaReceber(models.Model):
             0: 'A Receber',
             1: 'Recebido',
         }[self.situacao]
-        return '{self.descricao} - ${self.valor} ({self.option})'.format(self=self)
+        return '{self.descricao} ({self.option})'.format(self=self)
 
     def json(self):
         self.option = {
