@@ -38,44 +38,46 @@
         </li>
       </ul>
     </nav>
-    <section>
-      <h1> Contas a Pagar </h1>
-      {% if contas_pagar %}
-      <ul>
-        {% for conta_pagar in contas_pagar %}
-        <li>
-          <p> {{ conta_pagar }} </p>
-          <p> Valor: {{ conta_pagar.valor }} </p>
-          <p> Vencimento: {{ conta_pagar.data_vencimento }} </p>
-          <p> Pagamento: {{ conta_pagar.data_pagamento }} </p>
-          <p> Forma: {{ conta_pagar.forma_pagamento }} </p>
-          <p> Classificacao: {{ conta_pagar.classificacao }} </p>
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p> Sem contas a pagar </p>
-      {% endif %}
-    </section>
-    <section>
-      <h1> Conta a Receber </h1>
-      {% if contas_receber %}
-      <ul>
-        {% for conta_receber in contas_receber %}
-        <li>
-          <p> {{ conta_receber }} </p>
-          <p> Valor: {{ conta_receber.valor }} </p>
-          <p> Expectativa: {{ conta_receber.data_expectativa }} </p>
-          <p> Recebimento: {{ conta_receber.data_recebimento }} </p>
-          <p> Forma: {{ conta_receber.forma_pagamento }} </p>
-          <p> Classificacao: {{ conta_receber.classificacao }} </p>
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p> Sem contas a receber </p>
-      {% endif %}
-    </section>
+    <div class="flex flex-wrap justify-around w-100">
+      <section class="pa3">
+        <h1> Contas a Pagar </h1>
+        {% if contas_pagar %}
+        <ul>
+          {% for conta_pagar in contas_pagar %}
+          <li>
+            <p> {{ conta_pagar }} </p>
+            <p> Valor: {{ conta_pagar.valor }} </p>
+            <p> Vencimento: {{ conta_pagar.data_vencimento }} </p>
+            <p> Pagamento: {{ conta_pagar.data_pagamento }} </p>
+            <p> Forma: {{ conta_pagar.forma_pagamento }} </p>
+            <p> Classificacao: {{ conta_pagar.classificacao }} </p>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p> Sem contas a pagar </p>
+        {% endif %}
+      </section>
+      <section class="pa3">
+        <h1> Conta a Receber </h1>
+        {% if contas_receber %}
+        <ul>
+          {% for conta_receber in contas_receber %}
+          <li>
+            <p> {{ conta_receber }} </p>
+            <p> Valor: {{ conta_receber.valor }} </p>
+            <p> Expectativa: {{ conta_receber.data_expectativa }} </p>
+            <p> Recebimento: {{ conta_receber.data_recebimento }} </p>
+            <p> Forma: {{ conta_receber.forma_pagamento }} </p>
+            <p> Classificacao: {{ conta_receber.classificacao }} </p>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p> Sem contas a receber </p>
+        {% endif %}
+      </section>
+    </div>
   </main>
 </body>
 
