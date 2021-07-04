@@ -27,7 +27,7 @@
     th,
     td {
       border: 1px solid black;
-      padding: 5px;
+      padding: 0.5rem;
     }
   </style>
 </head>
@@ -50,7 +50,7 @@
       <ul>
         {% for key, value in meses.items %}
         <li>
-          <a href="/fluxo_caixa/{{ value }}"> {{key}} </a>
+          <a href="/fluxo_caixa/2021/{{ value }}"> {{key}} </a>
         </li>
         {% endfor %}
       </ul>

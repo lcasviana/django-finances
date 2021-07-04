@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Finances </title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
+
+  <style>
+    p {
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      padding: 0.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <nav>
+      <h1> Navegação </h1>
+      <ul>
+        <li>
+          <a href="/admin"> Admin </a>
+        </li>
+        <li>
+          <a href="/"> Index </a>
+        </li>
+        <li>
+          <a href="/fluxo_caixa"> Fluxo de Caixa </a>
+        </li>
+      </ul>
+    </nav>
+    <section>
+      <h1> Fluxo de Caixa de {{ data_referencia }} </h1>
+
+      <h4> Fluxo </h4>
+      <table>
+        <thead>
+          <tr>
+            <th> Referencia </th>
+            <th> Total Pagar </th>
+            <th> Total Receber </th>
+            <th> Saldo Anterior </th>
+            <th> Saldo Atual </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> {{ data_referencia }} </td>
+            <td> {{ total_pagar }} </td>
+            <td> {{ total_receber }} </td>
+            <td> {{ saldo_mes_anterior }} </td>
+            <td> {{ saldo_atual }} </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4> Contas a Pagar </h4>
+      <table>
+        <thead>
+          <tr>
+            <th> Data Vencimento </th>
+            <th> Data Pagamento </th>
+            <th> Descricao </th>
+            <th> Valor </th>
+            <th> Forma Pagamento </th>
+            <th> Classificacao </th>
+            <th> Situacao </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for conta_pagar in contas_pagar %}
+          <tr>
+            <td> {{ conta_pagar.data_vencimento }} </td>
+            <td> {{ conta_pagar.data_pagamento }} </td>
+            <td> {{ conta_pagar.descricao }} </td>
+            <td> {{ conta_pagar.valor }} </td>
+            <td> {{ conta_pagar.forma_pagamento }} </td>
+            <td> {{ conta_pagar.classificacao }} </td>
+            <td> {{ conta_pagar.situacao }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h4> Contas a Receber </h4>
+      <table>
+        <thead>
+          <tr>
+            <th> Data Expectativa </th>
+            <th> Data Vencimento </th>
+            <th> Descricao </th>
+            <th> Valor </th>
+            <th> Forma Pagamento </th>
+            <th> Classificacao </th>
+            <th> Situacao </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for conta_receber in contas_receber %}
+          <tr>
+            <td> {{ conta_receber.data_expectativa }} </td>
+            <td> {{ conta_receber.data_recebimento }} </td>
+            <td> {{ conta_receber.descricao }} </td>
+            <td> {{ conta_receber.valor }} </td>
+            <td> {{ conta_receber.forma_pagamento }} </td>
+            <td> {{ conta_receber.classificacao }} </td>
+            <td> {{ conta_receber.situacao }} </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>

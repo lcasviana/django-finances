@@ -22,6 +22,13 @@
     li {
       margin-bottom: 1rem;
     }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      padding: 0.5rem;
+    }
   </style>
 </head>
 
@@ -40,42 +47,62 @@
     </nav>
     <div class="flex flex-wrap justify-around w-100">
       <section class="pa3">
-        <h1> Contas a Pagar </h1>
-        {% if contas_pagar %}
-        <ul>
-          {% for conta_pagar in contas_pagar %}
-          <li>
-            <p> {{ conta_pagar }} </p>
-            <p> Valor: {{ conta_pagar.valor }} </p>
-            <p> Vencimento: {{ conta_pagar.data_vencimento }} </p>
-            <p> Pagamento: {{ conta_pagar.data_pagamento }} </p>
-            <p> Forma: {{ conta_pagar.forma_pagamento }} </p>
-            <p> Classificacao: {{ conta_pagar.classificacao }} </p>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p> Sem contas a pagar </p>
-        {% endif %}
+        <h4> Contas a Pagar </h4>
+        <table>
+          <thead>
+            <tr>
+              <th> Data Vencimento </th>
+              <th> Data Pagamento </th>
+              <th> Descricao </th>
+              <th> Valor </th>
+              <th> Forma Pagamento </th>
+              <th> Classificacao </th>
+              <th> Situacao </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for conta_pagar in contas_pagar %}
+            <tr>
+              <td> {{ conta_pagar.data_vencimento }} </td>
+              <td> {{ conta_pagar.data_pagamento }} </td>
+              <td> {{ conta_pagar.descricao }} </td>
+              <td> {{ conta_pagar.valor }} </td>
+              <td> {{ conta_pagar.forma_pagamento }} </td>
+              <td> {{ conta_pagar.classificacao }} </td>
+              <td> {{ conta_pagar.situacao }} </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </section>
       <section class="pa3">
-        <h1> Conta a Receber </h1>
-        {% if contas_receber %}
-        <ul>
-          {% for conta_receber in contas_receber %}
-          <li>
-            <p> {{ conta_receber }} </p>
-            <p> Valor: {{ conta_receber.valor }} </p>
-            <p> Expectativa: {{ conta_receber.data_expectativa }} </p>
-            <p> Recebimento: {{ conta_receber.data_recebimento }} </p>
-            <p> Forma: {{ conta_receber.forma_pagamento }} </p>
-            <p> Classificacao: {{ conta_receber.classificacao }} </p>
-          </li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p> Sem contas a receber </p>
-        {% endif %}
+        <h4> Contas a Receber </h4>
+        <table>
+          <thead>
+            <tr>
+              <th> Data Expectativa </th>
+              <th> Data Vencimento </th>
+              <th> Descricao </th>
+              <th> Valor </th>
+              <th> Forma Pagamento </th>
+              <th> Classificacao </th>
+              <th> Situacao </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for conta_receber in contas_receber %}
+            <tr>
+              <td> {{ conta_receber.data_expectativa }} </td>
+              <td> {{ conta_receber.data_recebimento }} </td>
+              <td> {{ conta_receber.descricao }} </td>
+              <td> {{ conta_receber.valor }} </td>
+              <td> {{ conta_receber.forma_pagamento }} </td>
+              <td> {{ conta_receber.classificacao }} </td>
+              <td> {{ conta_receber.situacao }} </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </section>
     </div>
   </main>

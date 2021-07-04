@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 import json
 from ..models import *
 
+
 @csrf_exempt
 def contas_receber_index(request):
     try:
@@ -14,6 +15,7 @@ def contas_receber_index(request):
             return JsonResponse(status=405)
     except Exception as e:
         return JsonResponse(str(e), status=500)
+
 
 @csrf_exempt
 def contas_receber_index_id(request, id):
@@ -29,28 +31,33 @@ def contas_receber_index_id(request, id):
     except Exception as e:
         return JsonResponse(str(e), status=500)
 
+
 def contas_receber_obtain_all(request):
     contas_receber = ContaReceber.objects.all()
-    resposta = { 'contas_receber': list(map(lambda c: c.json(), contas_receber)) }
+    resposta = {'contas_receber': list(
+        map(lambda c: c.json(), contas_receber))}
     return JsonResponse(resposta, status=200)
+
 
 def contas_receber_insert(request):
     try:
         if not request.body:
-            return JsonResponse({ 'mensagem': 'Requisicao nula' }, status=400)
+            return JsonResponse({'mensagem': 'Requisicao nula'}, status=400)
         body = json.loads(request.body)
         if not 'classificacao' in body \
-            or not 'valor' in body \
-            or not 'descricao' in body \
-            or not 'data_expectativa' in body \
-            or not 'data_recebimento' in body \
-            or not 'forma_pagamento' in body \
-            or not 'classificacao' in body \
-            or not 'situacao' in body:
-            return JsonResponse({ 'mensagem': 'Campos nao preenchidos' }, status=400)
+                or not 'valor' in body \
+                or not 'descricao' in body \
+                or not 'data_expectativa' in body \
+                or not 'data_recebimento' in body \
+                or not 'forma_pagamento' in body \
+                or not 'classificacao' in body \
+                or not 'situacao' in body:
+            return JsonResponse({'mensagem': 'Campos nao preenchidos'}, status=400)
 
-        forma_pagamento_obj = FormaPagamento.objects.get(descricao=body['forma_pagamento'])
-        classificacao_obj = Classificacao.objects.get(descricao=body['classificacao'])
+        forma_pagamento_obj = FormaPagamento.objects.get(
+            descricao=body['forma_pagamento'])
+        classificacao_obj = Classificacao.objects.get(
+            descricao=body['classificacao'])
 
         conta_receber = ContaReceber()
         conta_receber.valor = body['valor']
@@ -64,9 +71,10 @@ def contas_receber_insert(request):
 
         return HttpResponse(status=201)
     except FormaPagamento.DoesNotExist:
-        return JsonResponse({ 'mensagem': 'Forma de pagamento nao encontrada' }, status=400)
+        return JsonResponse({'mensagem': 'Forma de pagamento nao encontrada'}, status=400)
     except Classificacao.DoesNotExist:
-        return JsonResponse({ 'mensagem': 'Classificao nao encontrada' }, status=400)
+        return JsonResponse({'mensagem': 'Classificao nao encontrada'}, status=400)
+
 
 def contas_receber_obtain_id(request, id):
     try:
@@ -76,24 +84,27 @@ def contas_receber_obtain_id(request, id):
     except ContaReceber.DoesNotExist:
         return HttpResponse(status=404)
 
+
 def contas_receber_update(request, id):
     try:
         if not request.body:
-            return JsonResponse({ 'mensagem': 'Requisicao nula' }, status=400)
+            return JsonResponse({'mensagem': 'Requisicao nula'}, status=400)
         body = json.loads(request.body)
         if not 'classificacao' in body \
-            or not 'valor' in body \
-            or not 'descricao' in body \
-            or not 'data_expectativa' in body \
-            or not 'data_recebimento' in body \
-            or not 'forma_pagamento' in body \
-            or not 'classificacao' in body \
-            or not 'situacao' in body:
-            return JsonResponse({ 'mensagem': 'Campos nao preenchidos' }, status=400)
+                or not 'valor' in body \
+                or not 'descricao' in body \
+                or not 'data_expectativa' in body \
+                or not 'data_recebimento' in body \
+                or not 'forma_pagamento' in body \
+                or not 'classificacao' in body \
+                or not 'situacao' in body:
+            return JsonResponse({'mensagem': 'Campos nao preenchidos'}, status=400)
 
         conta_receber = ContaReceber.objects.get(id=id)
-        forma_pagamento_obj = FormaPagamento.objects.get(descricao=body['forma_pagamento'])
-        classificacao_obj = Classificacao.objects.get(descricao=body['classificacao'])
+        forma_pagamento_obj = FormaPagamento.objects.get(
+            descricao=body['forma_pagamento'])
+        classificacao_obj = Classificacao.objects.get(
+            descricao=body['classificacao'])
 
         conta_receber.valor = body['valor']
         conta_receber.descricao = body['descricao']
@@ -106,11 +117,12 @@ def contas_receber_update(request, id):
 
         return HttpResponse(status=202)
     except FormaPagamento.DoesNotExist:
-        return JsonResponse({ 'mensagem': 'Forma de pagamento nao encontrada' }, status=400)
+        return JsonResponse({'mensagem': 'Forma de pagamento nao encontrada'}, status=400)
     except Classificacao.DoesNotExist:
-        return JsonResponse({ 'mensagem': 'Classificao nao encontrada' }, status=400)
+        return JsonResponse({'mensagem': 'Classificao nao encontrada'}, status=400)
     except ContaReceber.DoesNotExist:
         return HttpResponse(status=404)
+
 
 def contas_receber_delete(request, id):
     try:

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class FormaPagamento(models.Model):
     descricao = models.CharField(max_length=60)
 
@@ -7,4 +8,4 @@ class FormaPagamento(models.Model):
         return '{self.descricao}'.format(self=self)
 
     class Meta:
-        verbose_name_plural = "Formas de Pagamento"
+        verbose_name_plural = 'Formas de Pagamento'
